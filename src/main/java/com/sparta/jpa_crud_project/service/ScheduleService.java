@@ -21,10 +21,12 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
+    private final WeatherService weatherService;
 
-    public ScheduleService(ScheduleRepository scheduleRepository, UserRepository userRepository) {
+    public ScheduleService(ScheduleRepository scheduleRepository, UserRepository userRepository, WeatherService weatherService) {
         this.scheduleRepository = scheduleRepository;
         this.userRepository = userRepository;
+        this.weatherService = weatherService;
     }
 
     @Transactional
@@ -35,6 +37,7 @@ public class ScheduleService {
         Schedule schedule = new Schedule();
         schedule.setTitle(scheduleRequestDto.getTitle());
         schedule.setContent(scheduleRequestDto.getContent());
+        schedule.setWeather(weatherService.getTodayWeather()); // 날씨 정보 추가
         schedule.setAuthor(author);
         scheduleRepository.save(schedule);
 
