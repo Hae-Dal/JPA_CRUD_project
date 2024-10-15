@@ -34,6 +34,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+        String role = jwtUtil.extractUserRole(token);
+        if (request.getMethod().equals("PUT") || request.getMethod().equals("DELETE")) {
+            if (!"ADMIN".equals(role)) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to modify or delete schedules");
+                return;
+            }
+        }
+
+        // Add additional logic for setting authentication context if needed
+
         filterChain.doFilter(request, response);
     }
 }

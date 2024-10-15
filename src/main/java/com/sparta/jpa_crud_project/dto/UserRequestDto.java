@@ -1,5 +1,6 @@
 package com.sparta.jpa_crud_project.dto;
 
+import com.sparta.jpa_crud_project.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -20,4 +21,7 @@ public class UserRequestDto {
 
     @NotBlank(message = "Password cannot be blank")
     private String password;
+
+    @NotBlank(message = "role cannot be blank")
+    private Role role;
 }

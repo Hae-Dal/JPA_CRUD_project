@@ -44,6 +44,9 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Schedule> schedules = new HashSet<>();
 

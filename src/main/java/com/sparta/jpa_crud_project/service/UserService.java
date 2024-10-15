@@ -34,9 +34,10 @@ public class UserService {
         user.setUserName(userRequestDto.getUserName());
         user.setEmail(userRequestDto.getEmail());
         user.setPassword(encodedPassword);
+        user.setRole(userRequestDto.getRole());
         userRepository.save(user);
 
-        return jwtUtil.generateToken(user.getUserName());
+        return jwtUtil.generateToken(user.getUserName(), user.getRole().name());
     }
 
     public String login(LoginRequestDto loginRequestDto) {
@@ -47,7 +48,7 @@ public class UserService {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
-        return jwtUtil.generateToken(user.getUserName());
+        return jwtUtil.generateToken(user.getUserName(), user.getRole().name());
     }
 
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
