@@ -3,6 +3,7 @@ package com.sparta.jpa_crud_project.controller;
 import com.sparta.jpa_crud_project.dto.UserRequestDto;
 import com.sparta.jpa_crud_project.dto.UserResponseDto;
 import com.sparta.jpa_crud_project.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,12 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody @Valid UserRequestDto userRequestDto) {
+        String token = userService.registerUser(userRequestDto);
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping
