@@ -1,5 +1,6 @@
 package com.sparta.jpa_crud_project.controller;
 
+import com.sparta.jpa_crud_project.dto.LoginRequestDto;
 import com.sparta.jpa_crud_project.dto.UserRequestDto;
 import com.sparta.jpa_crud_project.dto.UserResponseDto;
 import com.sparta.jpa_crud_project.service.UserService;
@@ -22,6 +23,12 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody @Valid UserRequestDto userRequestDto) {
         String token = userService.registerUser(userRequestDto);
+        return ResponseEntity.ok(token);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto) {
+        String token = userService.login(loginRequestDto);
         return ResponseEntity.ok(token);
     }
 

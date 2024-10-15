@@ -1,5 +1,6 @@
 package com.sparta.jpa_crud_project.service;
 
+import com.sparta.jpa_crud_project.dto.LoginRequestDto;
 import com.sparta.jpa_crud_project.dto.UserRequestDto;
 import com.sparta.jpa_crud_project.dto.UserResponseDto;
 import com.sparta.jpa_crud_project.encoder.PasswordEncoder;
@@ -34,6 +35,17 @@ public class UserService {
         user.setEmail(userRequestDto.getEmail());
         user.setPassword(encodedPassword);
         userRepository.save(user);
+
+        return jwtUtil.generateToken(user.getUserName());
+    }
+
+    public String login(LoginRequestDto loginRequestDto) {
+        User user = userRepository.findByEmail(loginRequestDto.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
 
         return jwtUtil.generateToken(user.getUserName());
     }
